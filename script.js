@@ -10,14 +10,13 @@ async function fetchSoundData(inputString) {
     }
 }
 
-// Function to play sound frequencies using Web Audio API
+// Function to play sound frequencies
 function playSound(frequencies) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
 
     const oscillator = audioContext.createOscillator();
     oscillator.type = 'sine';
 
-    // Validate the first frequency value before setting it
     const firstFrequency = parseFloat(frequencies[0]);
     if (!isNaN(firstFrequency) && isFinite(firstFrequency)) {
         oscillator.frequency.setValueAtTime(firstFrequency, audioContext.currentTime);
@@ -28,13 +27,14 @@ function playSound(frequencies) {
 
         oscillator.start();
         oscillator.stop(audioContext.currentTime + 1);
+
+        const frequencyDisplay = document.getElementById('frequencyDisplay');
+        frequencyDisplay.textContent = `Frequencies: ${frequencies.join(', ')}`;
     } else {
         console.error('Invalid frequency value:', firstFrequency);
     }
 }
 
-
-// Function to handle button click
 async function handleButtonClick(char) {
     const soundData = await fetchSoundData(char);
     console.log('Received sound data:', soundData);
@@ -45,6 +45,7 @@ async function handleButtonClick(char) {
         console.error(`Error fetching sound data for ${char}`);
     }
 }
+
 
 // Create buttons for each letter of the alphabet
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';

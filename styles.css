@@ -97,7 +97,7 @@ p{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
-    align-self: end; /* Align the container to the bottom of the second row */
+    align-self: end;
 }
 
 button {
